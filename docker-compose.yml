@@ -1,23 +1,16 @@
 version: '3.8'
-services:
-  # Aplicação
-  app: # Nome do meu container
-    image: node:20.11.1-alpine # Imagem do recurso a ser instalado no container
-    deploy: # Configurações de Deploy
-      replicas: 8 # 8 aplicações disponibilizadas dentro do cluster
-      placement:
-        constraints:
-          - node.role == worker # Define que as réplicas irão rodar apenas nos nodes workers
-    ports:
-      - "3000:3000"
 
-  visualizer:
-    image: dockersamples/visualizer
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
+services:
+  app:
+    container_name: nodejs-app
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8888:88"
+      - "3000:3000" # Mapeia a porta 3000 do host para o contêiner
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - .:/usr/src/app # Monta o diretório atual no contêiner para desenvolvimento
+      - /usr/src/app/node_modules # Evita conflitos com os node_modules
+    environment:
+      NODE_ENV: development # Define o ambiente como desenvolvimento
+    command: npm start # Comando para iniciar a aplicação
