@@ -1,20 +1,17 @@
 # Usa a imagem oficial do Node.js como base
 FROM node:20.11.1-alpine
 
-# install git
+# Instala o Git (caso precise de funcionalidades específicas com Git no contêiner)
 RUN apk update && apk add git
 
 # Define o diretório de trabalho no contêiner
 WORKDIR /usr/src/app
 
-# Clona o repositório da aplicação
-RUN git clone https://github.com/VagalPHP/baileysjs-test.git .
+# Copia os arquivos do diretório atual para o diretório de trabalho do contêiner
+COPY . .
 
 # Instala as dependências
 RUN npm install
-
-# Copia o restante do código para o contêiner
-COPY . .
 
 # Builda os arquivos
 RUN npm run build
