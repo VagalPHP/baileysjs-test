@@ -4,8 +4,8 @@ FROM node:20.11.1-alpine
 # Define o diretório de trabalho no contêiner
 WORKDIR /usr/src/app
 
-# Copia os arquivos package.json e package-lock.json
-COPY package*.json ./
+# Clona o repositório da aplicação
+RUN git clone https://github.com/VagalPHP/baileysjs-test.git .
 
 # Instala as dependências
 RUN npm install
