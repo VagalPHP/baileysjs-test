@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "test",
-    "build": "tsc src/index.ts",
+    "build": "tsc --skipLibCheck --noEmitOnError false --strict false --checkJs false",
     "start": "node dist/index.js",
     "dev": "ts-node --transpile-only src/index.ts"
   },

@@ -4,7 +4,6 @@ import informationContext from '../contexts/information_context.json'
 import greetingContext from '../contexts/greeting_context.json'
 import humanServiceContext from '../contexts/human_service_context.json'
 
-// const { similarity } = require('@nlpjs/similarity')
 import { similarity } from '@nlpjs/similarity'
 
 export interface INlpResponse {

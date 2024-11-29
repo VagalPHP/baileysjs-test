@@ -13,14 +13,15 @@
     "noImplicitAny": false,
     "composite": true,
     // Permite a importação de JSON
-    "skipLibCheck": true
-    // Ignora verificações de tipos em dependências
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "include": [
     "src",
     "src/domains/nlp/contexts/*.json"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "node_modules/baileys/**"
   ]
 }
