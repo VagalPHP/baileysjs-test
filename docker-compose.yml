@@ -4,13 +4,12 @@ services:
   app:
     container_name: nodejs-app
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: .  # Define o diretório de build como o local atual
+      dockerfile: Dockerfile  # Especifica o Dockerfile a ser utilizado
     ports:
-      - "3000:3000" # Mapeia a porta 3000 do host para o contêiner
+      - "3000:3000"  # Mapeia a porta 3000 do host para a do contêiner
     volumes:
-      - .:/usr/src/app # Monta o diretório atual no contêiner para desenvolvimento
-      - /usr/src/app/node_modules # Evita conflitos com os node_modules
+      - /usr/src/app/node_modules  # Evita conflitos com os node_modules
     environment:
-      NODE_ENV: development # Define o ambiente como desenvolvimento
-    command: npm start # Comando para iniciar a aplicação
+      NODE_ENV: development  # Define o ambiente como desenvolvimento
+    command: npm start  # Comando para iniciar a aplicação
