@@ -13,4 +13,4 @@ services:
       - /usr/src/app/node_modules # Evita conflitos com os node_modules
     environment:
       NODE_ENV: development # Define o ambiente como desenvolvimento
-    command: npm start # Comando para iniciar a aplicação
+    command: npm build && npm start # Comando para iniciar a aplicação
