@@ -1,6 +1,9 @@
 # Usa a imagem oficial do Node.js como base
 FROM node:20.11.1-alpine
 
+# install git
+RUN apk update && apk add git
+
 # Define o diretório de trabalho no contêiner
 WORKDIR /usr/src/app
 
