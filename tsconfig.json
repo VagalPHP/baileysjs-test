@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noEmitOnError": false,
+    "noUnusedParameters": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "composite": true,
+    // Permite a importação de JSON
+    "skipLibCheck": true
+    // Ignora verificações de tipos em dependências
+  },
+  "include": [
+    "src",
+    "src/domains/nlp/contexts/*.json"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

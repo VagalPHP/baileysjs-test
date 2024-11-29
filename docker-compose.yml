@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  # Aplicação
+  app: # Nome do meu container
+    image: node:20.11.1-alpine # Imagem do recurso a ser instalado no container
+    deploy: # Configurações de Deploy
+      replicas: 8 # 8 aplicações disponibilizadas dentro do cluster
+      placement:
+        constraints:
+          - node.role == worker # Define que as réplicas irão rodar apenas nos nodes workers
+    ports:
+      - "3000:3000"
+
+  visualizer:
+    image: dockersamples/visualizer
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    ports:
+      - "8888:88"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
