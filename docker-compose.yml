@@ -9,8 +9,7 @@ services:
     ports:
       - "3000:3000" # Mapeia a porta 3000 do host para o contêiner
     volumes:
-      - .:/usr/src/app # Monta o diretório atual no contêiner para desenvolvimento
       - /usr/src/app/node_modules # Evita conflitos com os node_modules
     environment:
       NODE_ENV: development # Define o ambiente como desenvolvimento
-    command: npm build && npm start # Comando para iniciar a aplicação
+    command: npm start # Comando para iniciar a aplicação

@@ -9,6 +9,21 @@ import { Boom } from '@hapi/boom'
 import nlpService from './domains/nlp/services/NlpService'
 import pino from 'pino'
 import * as http from 'http'
+import { io } from 'socket.io-client'
+
+const socketCLient = io('http://localhost:4000', { transports: ['websocket'] })
+
+socketCLient.on('connect', () => {
+  console.log('==========================================')
+  console.log('SOCKET CLIENT CONNECTED TO GATEWAY')
+  console.log('==========================================')
+})
+
+socketCLient.on('disconnect', () => {
+  console.log('==========================================')
+  console.log('SOCKET CLIENT DISCONNECTED FROM GATEWAY')
+  console.log('==========================================')
+})
 
 const logger = pino({ level: 'error' })
 const store = makeInMemoryStore({})
@@ -50,9 +65,12 @@ async function startSocket(clientId: number) {
     },
     generateHighQualityLinkPreview: true
   })
+
   sock.ev.on('creds.update', saveCreds) // Auth Manage
   sock.ev.on('connection.update', async (update: Partial<ConnectionState>) => {
     const { connection, lastDisconnect, qr } = update
+    console.log('==========================================')
+    console.log('==========================================')
     // console.log({update})
     if (qr) {
       // QR CODE RECEIVED

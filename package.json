@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "test",
-    "build": "tsc --skipLibCheck --noEmitOnError false --strict false --checkJs false",
+    "build": "tsc --skipLibCheck --noEmitOnError false --strict false --checkJs false --outDir dist --rootDir src",
     "start": "node dist/index.js",
     "dev": "ts-node --transpile-only src/index.ts"
   },
@@ -22,7 +22,9 @@
     "@nlpjs/lang-pt": "^4.26.1",
     "@nlpjs/similarity": "^4.26.1",
     "baileys": "github:WhiskeySockets/Baileys",
+    "engine.io-client": "^6.6.2",
     "pino": "^9.5.0",
-    "ts-node": "^10.9.2"
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
   }
 }
