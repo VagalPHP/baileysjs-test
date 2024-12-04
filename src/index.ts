@@ -11,8 +11,16 @@ import pino from 'pino'
 import * as http from 'http'
 import { io } from 'socket.io-client'
 
-const socketCLient = io('http://localhost:4000', { transports: ['websocket'] })
-
+// const CLIENT_ADDRESS = '0.0.0.0'
+// const CLIENT_ADDRESS = 'localhost'
+const CLIENT_ADDRESS = 'IP ADDRESS IPV4'
+const CLIENT_PORT = 4000
+console.log('==========================================')
+console.log('SOCKET CLIENT ENDPOINT: http://' + CLIENT_ADDRESS + ':' + CLIENT_PORT)
+console.log('==========================================')
+const socketCLient = io('http://' + CLIENT_ADDRESS + ':' + CLIENT_PORT, {
+  transports: ['websocket']
+})
 socketCLient.on('connect', () => {
   console.log('==========================================')
   console.log('SOCKET CLIENT CONNECTED TO GATEWAY')
