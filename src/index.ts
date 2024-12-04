@@ -13,7 +13,7 @@ import { io } from 'socket.io-client'
 
 // const CLIENT_ADDRESS = '0.0.0.0'
 // const CLIENT_ADDRESS = 'localhost'
-const CLIENT_ADDRESS = 'IP ADDRESS IPV4'
+const CLIENT_ADDRESS = '192.168.16.1'
 const CLIENT_PORT = 4000
 console.log('==========================================')
 console.log('SOCKET CLIENT ENDPOINT: http://' + CLIENT_ADDRESS + ':' + CLIENT_PORT)
@@ -25,6 +25,18 @@ socketCLient.on('connect', () => {
   console.log('==========================================')
   console.log('SOCKET CLIENT CONNECTED TO GATEWAY')
   console.log('==========================================')
+})
+
+interface ICreateClientRequest {
+  userId: number
+}
+
+socketCLient.on('createWaClient', (data: ICreateClientRequest) => {
+  const { userId } = data
+  console.log('==========================================')
+  console.log('CREATING CLIENT FOR USER ID: ' + userId)
+  console.log('==========================================')
+  startSocket(userId)
 })
 
 socketCLient.on('disconnect', () => {
@@ -77,14 +89,17 @@ async function startSocket(clientId: number) {
   sock.ev.on('creds.update', saveCreds) // Auth Manage
   sock.ev.on('connection.update', async (update: Partial<ConnectionState>) => {
     const { connection, lastDisconnect, qr } = update
-    console.log('==========================================')
-    console.log('==========================================')
     // console.log({update})
     if (qr) {
       // QR CODE RECEIVED
       console.log('==========================================')
       console.log('QR Code Receveid From Client ' + clientId)
       console.log('==========================================')
+      socketCLient.emit('clientStatusUpdate', {
+        socketId: socketCLient.id,
+        clientId: clientId,
+        status: 'available'
+      })
     }
 
     if (connection === 'close') {
@@ -108,6 +123,11 @@ async function startSocket(clientId: number) {
       console.log('==========================================')
       console.log('Conection OPENED To Client ' + clientId)
       console.log('==========================================')
+      socketCLient.emit('clientStatusUpdate', {
+        socketId: socketCLient.id,
+        clientId: clientId,
+        status: 'connected'
+      })
     }
   })
   sock.ev.on('messages.upsert', async (m) => {
@@ -156,7 +176,7 @@ async function startSocket(clientId: number) {
   store.bind(sock.ev)
 }
 
-startSocket(1)
+// startSocket(1)
 
 // startSocket(2);
 // startSocket(4);
