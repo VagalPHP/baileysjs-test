@@ -89,16 +89,23 @@ async function startSocket(clientId: number) {
   sock.ev.on('creds.update', saveCreds) // Auth Manage
   sock.ev.on('connection.update', async (update: Partial<ConnectionState>) => {
     const { connection, lastDisconnect, qr } = update
-    // console.log({update})
+    if (connection !== 'close') {
+      socketCLient.emit('qrCodeGenerated', {
+        socketId: socketCLient.id,
+        clientId: clientId,
+        status: 'available'
+      })
+    }
     if (qr) {
       // QR CODE RECEIVED
       console.log('==========================================')
       console.log('QR Code Receveid From Client ' + clientId)
       console.log('==========================================')
-      socketCLient.emit('clientStatusUpdate', {
+
+      socketCLient.emit('qrCodeGenerated', {
         socketId: socketCLient.id,
         clientId: clientId,
-        status: 'available'
+        qrCode: qr
       })
     }
 
@@ -117,7 +124,18 @@ async function startSocket(clientId: number) {
       console.log('==========================================')
       // reconnect if not logged out
       if (shouldReconnect) {
+        socketCLient.emit('clientStatusUpdate', {
+          socketId: socketCLient.id,
+          clientId: clientId,
+          status: 'available'
+        })
         startSocket(clientId)
+      } else {
+        socketCLient.emit('clientStatusUpdate', {
+          socketId: socketCLient.id,
+          clientId: clientId,
+          status: 'unavailable'
+        })
       }
     } else if (connection === 'open') {
       console.log('==========================================')
